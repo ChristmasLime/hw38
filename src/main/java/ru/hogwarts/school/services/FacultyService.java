@@ -9,6 +9,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 @Service
@@ -66,6 +67,12 @@ public class FacultyService {
                 .orElseThrow(NoSuchElementException::new);
 
 
+    }
+    public String getLongestName() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElseThrow(NoSuchElementException::new);
     }
 
 }
