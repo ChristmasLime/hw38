@@ -109,6 +109,16 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("/names-by")
+        public List<String>getBySymbol(@RequestParam char symbol) {
+        return studentService.getNames(symbol);
+    }
+
+    @GetMapping("/average")
+    public double getAveregeAge() {
+        return studentService.getAveregeAge();
+    }
+
 
 }
 

@@ -13,6 +13,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -88,6 +89,21 @@ public class StudentService {
         PageRequest pageRequest = PageRequest.of(0, 5);
         Page<Student> studentsPage = studentRepository.findLastFiveStudents(pageRequest);
         return studentsPage.getContent();
+    }
+
+    public List<String> getNames(char firstSymbol) {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(name->Character.toLowerCase(name.charAt(0))
+                        ==Character.toLowerCase(firstSymbol))
+                .collect(Collectors.toList());
+    }
+
+    public double getAveregeAge() {
+        return studentRepository.findAll().stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElseThrow(NoSuchElementException::new);
     }
 }
 
